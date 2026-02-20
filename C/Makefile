@@ -1,25 +1,25 @@
 #Variables
 NAME	= Colleen
 CFLAGS	= -Wall -Wextra -Werror
-CC		= cc
-INCLUDES=
-SRCS	= ex00.c
+CC		= clang
+SRCS	= Colleen.c
 OBJS	= $(SRCS:.c=.o)
+RM		= rm -rf
 
 #Rules
 all:	$(NAME)
 
-NAME:	Makefile $(INCLUDES) $(OBJS)
-		$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+$(NAME):Makefile $(OBJS)
+		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o:	%.c $(INCLUDES)
+%.o:	%.c
 		$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-		rm -rf $(OBJS)
+		$(RM) $(OBJS)
 
 fclean: clean
-		rm -rf $(NAME)
+		$(RM) $(NAME)
 
 re:		fclean all
 

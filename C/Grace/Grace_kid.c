@@ -1,1 +1,1 @@
-test
+"// this is a comment%cextern int open(const char *path, int oflag, ...);%cextern int write(int fildes, const void *buf, int nbyte);%c#define RUN int main(void) { dprintf(open(%cGrace_kid.c%c, 512 | 1, 0644), %c%s%c, 34, %s, 34 ); };%cRUN"

@@ -19,7 +19,7 @@ clean:
 		$(RM) $(OBJS)
 
 fclean: clean
-		$(RM) $(NAME) Sully_{1..5}
+		$(RM) $(NAME) Sully_{0..5} a.out
 
 re: fclean all
 

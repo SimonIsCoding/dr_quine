@@ -18,8 +18,8 @@ $(NAME): Makefile $(OBJS)
 clean:
 		$(RM) $(OBJS)
 
-flcean: clean
-		$(RM) $(NAME)
+fclean: clean
+		$(RM) $(NAME) Sully_{1..5}
 
 re: fclean all
 

@@ -1,5 +1,0 @@
-// This is a comment
-#define Useless_define
-#define CODE "// This is a comment%c#define Useless_define%c#define CODE%c#define RUN int main(void){ extern int open(const char *path, int oflag, ...); extern int write(int fildes, const void *buf, int nbyte); extern int dprintf(int fd, const char *format, ...); dprintf(open(%cGrace_kid.c%c, 512 | 1, 0644), %c%s%c, 10, 10, 34, CODE, 34, 10, 34, 34); };%cRUN"
-#define RUN int main(void){ extern int open(const char *path, int oflag, ...); extern int write(int fildes, const void *buf, int nbyte); extern int dprintf(int fd, const char *format, ...); dprintf(open("Grace_kid.c", 450 | 1, 0644), "// This is a comment%c#define Useless_define%c#define CODE %c%s%c%c#define RUN int main(void){ extern int open(const char *path, int oflag, ...); extern int write(int fildes, const void *buf, int nbyte); extern int dprintf(int fd, const char *format, ...); dprintf(open(%cGrace_kid.c%c, 512 | 1, 0644), 10, 10, 34, CODE, 34, 10, 34, 34); };%cRUN", 10, 10, 34, CODE, 34, 10, 34, 34, 10); };
-RUN

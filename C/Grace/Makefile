@@ -19,7 +19,7 @@ clean:
 		$(RM) $(OBJS)
 
 fclean: clean
-		$(RM) $(NAME)
+		$(RM) $(NAME) Grace_kid.c
 
 re: 	fclean all
 

@@ -1,5 +1,5 @@
-// this is a comment
-#define SOURCE_CODE "// this is a comment%c#define SOURCE_CODE %c%s%c%c#define RUN int main(void) { extern int open(const char *path, int oflag, ...);extern int write(int fildes, const void *buf, int nbyte);extern int dprintf(int fd, const char *format, ...); dprintf(open(%cGrace_kid.c%c, 512 | 1, 0644), %c%s%c, 34, 10, 34, SOURCE_CODE, 34, 10, 34, 34, 34, SOURCE_CODE, 34, 10); };%cRUN"
-
-#define RUN int main(void) { extern int open(const char *path, int oflag, ...);extern int write(int fildes, const void *buf, int nbyte);extern int dprintf(int fd, const char *format, ...); dprintf(open("Grace_kid.c", 512 | 1, 0644), "// this is a comment%c#define SOURCE_CODE %c%s%c%c#define RUN int main(void) { extern int open(const char *path, int oflag, ...);extern int write(int fildes, const void *buf, int nbyte);extern int dprintf(int fd, const char *format, ...); dprintf(open(%cGrace_kid.c%c, 512 | 1, 0644), %c%s%c, 34, 10, 34, SOURCE_CODE, 34, 10, 34, 34, 34, SOURCE_CODE, 34, 10 ); };%cRUN", 10, 34, SOURCE_CODE, 34, 10, 34, 34, 34, SOURCE_CODE, 34, 10 ); };
+//This is a comment
+#define FILENAME "Grace_kid.c"
+#define CODE "//This is a comment%c#define FILENAME %cGrace_kid.c%c%c#define CODE %c%s%c%c#define RUN int main(void) { extern int open(const char *path, int oflag, ...);extern int write(int fildes, const void *buf, int nbyte);extern int dprintf(int fd, const char *format, ...); dprintf(open(FILENAME, 512 | 1024 | 1, 0644), CODE, 10, 34, 34, 10, 34, CODE, 34, 10, 10); };%cRUN"
+#define RUN int main(void) { extern int open(const char *path, int oflag, ...);extern int write(int fildes, const void *buf, int nbyte);extern int dprintf(int fd, const char *format, ...); dprintf(open(FILENAME, 512 | 1024 | 1, 0644), CODE, 10, 34, 34, 10, 34, CODE, 34, 10, 10); };
 RUN

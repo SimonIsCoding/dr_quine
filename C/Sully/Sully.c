@@ -7,6 +7,7 @@
 // utiliser la fonction system
 #include <stdio.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #define FILENAME
 
 int main(void)
@@ -18,6 +19,8 @@ int main(void)
 		snprintf(filename, sizeof(filename), "Sully_%d", i);
 		open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		printf("%s\n", filename);
+		system("clang -Wall -Wextra -Werror Sully.c");
+		printf("file A %i", i);
 		i--;
 	}
 	return (0);

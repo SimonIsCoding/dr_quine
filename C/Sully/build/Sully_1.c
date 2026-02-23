@@ -8,7 +8,7 @@
 
 int main(void)
 {
-	int	i = 5;
+	int	i = 0;
 	char filename[256];
 	char executable[256];
 	char command[256];

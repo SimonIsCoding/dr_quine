@@ -1,19 +1,21 @@
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#define FILENAME
-#define CODE "#include <stdio.h>%c#include <fcntl.h>%c#include <stdlib.h>%c#define FILENAME%c#define CODE %c%s%c%c%cint main(void)%c{%c	int	i = %d;%c	char filename[10];%c	while (i >= 0)%c	{%c		snprintf(filename, sizeof(filename), %cSully_%d.c%c, i);%c		dprintf(open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644), CODE, 10, 10, 10, 10, 34, CODE, 34, 10, 10, 10, 10, i, 10, 10, 10, 10, 34, i, 34, 10, 10, 34, 34, 10, 10, 10);%c		system(%cclang -Wall -Wextra -Werror Sully.c%c);%c		i--;	%c	}%c}"
+#define CODE "#include <sys/stat.h>%c#include <sys/types.h>%c#include <unistd.h>%c#include <stdio.h>%c#include <fcntl.h>%c#include <stdlib.h>%c#define CODE %c%s%c%c%cint main(void)%c{%c	int	i = %d;%c	char filename[50];%c	char command[50];%c	if (i < 0)%c		return(0);%c	chdir(%cbuild%c);%c	snprintf(filename, sizeof(filename), %cSully_%%d.c%c, i);%c	dprintf(open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644), CODE, 10, 10, 10, 10, 10, 10, 34, CODE, 34, 10, 10, 10, 10, i - 1, 10, 10, 10, 10, 10, 34, 34, 10, 34, 34, 10, 10, 34, 34, 10, 10);%c	snprintf(command, sizeof(command), %cclang -Wall -Wextra -Werror %%s -o Sully_%%d && ./Sully_%%d%c, filename, i, i);%c	system(command);%c}"
 
 int main(void)
 {
 	int	i = 5;
-	char filename[10];
-	while (i >= 0)
-	{
-		snprintf(filename, sizeof(filename), "Sully_%d.c", i);
-		dprintf(open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644), CODE, 10, 10, 10, 10, 34, CODE, 34, 10, 10, 10, 10, i, 10, 10, 10, 10, 34, i, 34, 10, 10, 34, 34, 10, 10, 10);
-		system("clang -Wall -Wextra -Werror Sully.c");
-		// printf("file %i", i);
-		i--;
-	}
+	char filename[50];
+	char command[50];
+	if (i < 0)
+		return(0);
+	chdir("build");
+	snprintf(filename, sizeof(filename), "Sully_%d.c", i);
+	dprintf(open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644), CODE, 10, 10, 10, 10, 10, 10, 34, CODE, 34, 10, 10, 10, 10, i - 1, 10, 10, 10, 10, 10, 34, 34, 10, 34, 34, 10, 10, 34, 34, 10, 10);
+	snprintf(command, sizeof(command), "clang -Wall -Wextra -Werror %s -o Sully_%d && ./Sully_%d", filename, i, i);
+	system(command);
 }

@@ -19,7 +19,7 @@ clean:
 		$(RM) $(OBJS)
 
 fclean: clean
-		$(RM) $(NAME) Sully_{0..5} a.out
+		$(RM) $(NAME) ./build Sully_{0..5}.c a.out Sully_{0..5}
 
 re: fclean all
 

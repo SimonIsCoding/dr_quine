@@ -13,11 +13,9 @@ $(NAME): Makefile
 		mkdir -p $(BUILD)
 		cd $(BUILD); $(COMP) $(FLAGS) ../$(SRCS) -o $(NAME); ./$(NAME)
 		@echo "Now let's check the 'diff ../Sully.c Sully_0.c' command line"
-		cd $(BUILD) && diff ../Sully.c Sully_0.c
-		@echo "wait a bit"
-		sleep 10
+		@cd $(BUILD) && diff ../Sully.c Sully_0.c || true
 		@echo "Now let's check the 'diff Sully_3.c Sully_2.c' command line"
-		cd $(BUILD) && diff Sully_3.c Sully_2.c
+		@cd $(BUILD) && diff Sully_3.c Sully_2.c || true
 
 clean:
 		$(RM) $(BUILD)

@@ -1,11 +1,11 @@
-extern	SYM(printf)
+extern	printf
 default rel
 
 section .text
-SYM(Colleen):
+Colleen:
 
 
-SYM(main):
+main:
 
 
 section	.data

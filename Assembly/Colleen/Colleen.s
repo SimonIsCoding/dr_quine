@@ -8,7 +8,7 @@ global	main
 section .text
 Colleen:
 	lea		rdi, [quine]
-;	lea		rsi, [quine_ptr]
+	lea		rsi, [quine]
 	call	printf wrt ..plt
 	ret
 
@@ -19,16 +19,4 @@ main:
 	ret
 
 section	.data
-quine:		db "extern printf", 10, "default rel", 10, 10, ";comment outside the entrypoint", 10, 10, "section .text", 10, "Colleen:", 10, "main:", 10, ";My comment inside the main", 10, "section .data", 10, "quine: db ", 34, quine_ptr, 34, 10, 0	
-quine_ptr:  dq quine
-
-
-;Il te faut deux commentaires
-;un a lexterieur du main et un a l'interieur du main
-;c'est le commentaire a l'interieur du main qui va imprimer tout le code et tu devras appeler
-;un a l'exterieur pour faire beau
-
-;Architecture
-;tu dois avoir une fonction externe que tu appelleras avec main
-;Je pense que cette fonction externe doit avoir un printf dedans pour imprimer le code
-;ton main doit aussi imprimer un printf avec le code du fichier dedans + des variables dynamiques qui imprimeront le code de la fonction externe
+quine:		db "extern printf", 10, "default rel", 10, 10, "global main", 10, 10, ";comment outside the entrypoint", 10, 10, "section .text", 10, "Colleen:", 10, "	lea	rdi, [quine]", 10, "	lea	rsi, [quine]", 10, "	call	printf wrt ..plt", 10, "	ret", 10, 10, "main:", 10, ";My comment inside the main", 10, "	call	Colleen", 10, "	xor	rax, rax", 10, "	ret", 10, 10, "section .data", 10, "quine: db ", 34, "%s", 34, 0

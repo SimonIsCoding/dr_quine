@@ -8,7 +8,9 @@ global	main
 section .text
 Colleen:
 	lea		rdi, [quine]
-	lea		rsi, [quine]
+	mov		rsi, 34
+	mov		rdx, 10
+	lea		rcx, [quine]
 	call	printf wrt ..plt
 	ret
 
@@ -19,4 +21,4 @@ main:
 	ret
 
 section	.data
-quine:		db "extern printf", 10, "default rel", 10, 10, "global main", 10, 10, ";comment outside the entrypoint", 10, 10, "section .text", 10, "Colleen:", 10, "	lea	rdi, [quine]", 10, "	lea	rsi, [quine]", 10, "	call	printf wrt ..plt", 10, "	ret", 10, 10, "main:", 10, ";My comment inside the main", 10, "	call	Colleen", 10, "	xor	rax, rax", 10, "	ret", 10, 10, "section .data", 10, "quine: db ", 34, "%s", 34, 0
+quine:		db "extern printf%2$cdefault rel%2$c%2$cglobal main%2$c%2$c;comment outside the entrypoint%2$c%2$csection .text%2$cColleen:%2$c	lea	rdi [quine]%2$c	lea	rsi [quine]%2$c	call	printf wrt ..plt%2$c	ret%2$c%2$cmain:%2$c;My comment inside the main%2$c	call	Colleen%2$c	xor	rax rax%2$c	ret%2$c%2$csection .data%2$cquine: db		%1$c%s%1$c, 0", 0

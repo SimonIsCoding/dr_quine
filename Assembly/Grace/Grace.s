@@ -1,3 +1,4 @@
+;en gros tu dois utiliser dprintf, open, write. close ?
 	;syscall 2 for OPEN & 0x241 for flags
 	%macro open 3
 		mov	rax, 2

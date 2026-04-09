@@ -13,6 +13,7 @@
 %endmacro
 
 extern	snprintf
+extern	dprintf
 
 default	rel	
 global	main
@@ -20,25 +21,45 @@ global	main
 section	.text
 main:
 	push	rbp
-;	open	[filename], 0x241, 644o
-	lea		rdi, [buf]
+
+.loop:
+	lea		rdi, [fd]
 	mov		rsi, 32
-	mov		rcx, counter
 	lea		rdx, [filename]
+	mov		rcx, [counter]
+	xor		rax, rax
 	call	snprintf wrt ..plt
-	mov		[fd], rax
-	write	[fd], [code], 7
+
+	open	[fd], 0x241, 644o
+	mov		rdi, rax
+	lea		rsi, [code]
+	call	dprintf wrt ..plt
 	close	[fd]
+
+;	lea		rdi, [fd]
+;	mov		rsi, 32
+;	lea		rdx, [executable]
+;	mov		rcx, [counter]
+;	xor		rax, rax
+;	call	snprintf wrt ..plt
+
+
+	mov		rax, [counter]
+	dec		rax
+	mov		[counter], rax
+	jns		.loop
+
 	xor		rax, rax
 	pop		rbp
 	ret
 
 section	.data
 filename:	db	"Sully_%d.s", 0
+executable:	db	"Sully_%d", 0
 code:		db	"myCode", 0
-fd:			dq	0
-counter		dq	5
+counter:	dq	5
+command:	db	"gcc %s -o %s && ./%s", 0
 
 section	.bss
-buf:		resb	32
+fd:			resb	32
 file_size:	resb	32

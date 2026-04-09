@@ -30,24 +30,22 @@ main:
 	xor		rax, rax
 	call	snprintf wrt ..plt
 
+	lea		rdi, [fd]
+	mov		rsi, 32
+	lea		rdx, [executable]
+	mov		rcx, [counter]
+	xor		rax, rax
+	call	snprintf wrt ..plt
+
 	open	[fd], 0x241, 644o
 	mov		rdi, rax
 	lea		rsi, [code]
 	call	dprintf wrt ..plt
 	close	[fd]
 
-;	lea		rdi, [fd]
-;	mov		rsi, 32
-;	lea		rdx, [executable]
-;	mov		rcx, [counter]
-;	xor		rax, rax
-;	call	snprintf wrt ..plt
-
-
 	mov		rax, [counter]
 	dec		rax
 	mov		[counter], rax
-	jns		.loop
 
 	xor		rax, rax
 	pop		rbp

@@ -14,6 +14,7 @@
 
 extern	snprintf
 extern	dprintf
+extern	system
 
 default	rel	
 global	main
@@ -46,6 +47,17 @@ main:
 	mov		rax, [counter]
 	dec		rax
 	mov		[counter], rax
+	
+;definit les arguments de system()
+; tu crois creer la variable command, que l'on va lancer dans system
+; ensuite tu dois appeler system et executer le fichier Sully_5.s et executer Sully_5
+; Ensuite je ne sais pas comment on va gerer la decrementation du X 
+; ni faire en sorte de commencer avec X - 1
+; Essaie de ne pas utiliser l'IA sinon ca sert a rien de le faire
+	lea		rdi, [command]
+	mov		rsi, 32
+	lea		rdx, [command]
+	call	system
 
 	xor		rax, rax
 	pop		rbp

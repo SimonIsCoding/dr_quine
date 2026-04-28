@@ -57,15 +57,17 @@ main:
 ;	lea		rdx, [command]
 ;	call	system
 
-;int snprintf(name_command, sizeof(name_command), "nasm -f elf64 %s -o %s && gcc %s -o %s", filename, objectFile, objectFile, executable); // 65 characters
+;int snprintf(file1, sizeof(file1), "Sully_5.s", filename);
+;int snprintf(file2, sizeof(file2), "Sully_5.o", objectFile);
+;int snprintf(command_nasm, sizeof(command_nasm), "nasm -f elf64 %s -o %s", filename, objectFile); // 65 characters
+;int snprintf(command_gcc, sizeof(command_gcc), "gcc %s -o %s", objectFile, executable); // 65 characters
 
-	lea		rdi, [command2execute]
-	mov		rsi, 65
-	lea		rdx, [command]
-	lea		rcx, [filename]
-	lea		r8, [objectFile]
-	lea		r9, [objectFile]
-	lea		r10, [executable]
+	lea		rdi, [file1]
+	mov		rsi, 32
+	lea		rdx, []
+	lea		rcx, []
+	lea		r8, []
+	lea		r9, []
 	call	snprintf wrt ..plt
 
 	xor		rax, rax
@@ -74,16 +76,19 @@ main:
 
 section	.data
 filename:	db	"Sully_%d.s", 0
-objectFile:	db	"Sully_%d.0", 0
+objectFile:	db	"Sully_%d.o", 0
 executable:	db	"Sully_%d", 0
 code:		db	"myCode", 0
 counter:	dq	5
-command:	db	"nasm -f elf64 %s -o %s && gcc %s -o %s", 0
+command_nasm:	db	"", 0
+command_gcc:	db	"", 0
 
 section	.bss
 fd:			resb	32
 file_size:	resb	32
-command2execute:	resb	65
+execution:	resb	65
+file1:		resb	32
+file2:		resb	32
 
 ; definit les arguments de system()
 ; tu crois creer la variable command, que l'on va lancer dans system

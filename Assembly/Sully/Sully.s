@@ -66,6 +66,7 @@ main:
 	lea		r8, [objectFile]
 	lea		r9, [objectFile]
 	lea		r10, [executable]
+	call	snprintf wrt ..plt
 
 	xor		rax, rax
 	pop		rbp
@@ -73,6 +74,7 @@ main:
 
 section	.data
 filename:	db	"Sully_%d.s", 0
+objectFile:	db	"Sully_%d.0", 0
 executable:	db	"Sully_%d", 0
 code:		db	"myCode", 0
 counter:	dq	5

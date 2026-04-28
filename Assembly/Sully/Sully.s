@@ -31,12 +31,12 @@ main:
 	xor		rax, rax
 	call	snprintf wrt ..plt
 
-	lea		rdi, [fd]
-	mov		rsi, 32
-	lea		rdx, [executable]
-	mov		rcx, [counter]
-	xor		rax, rax
-	call	snprintf wrt ..plt
+;	lea		rdi, [fd]
+;	mov		rsi, 32
+;	lea		rdx, [executable]
+;	mov		rcx, [counter]
+;	xor		rax, rax
+;	call	snprintf wrt ..plt
 
 	open	[fd], 0x241, 644o
 	mov		rdi, rax
@@ -47,17 +47,25 @@ main:
 	mov		rax, [counter]
 	dec		rax
 	mov		[counter], rax
-	
-;definit les arguments de system()
-; tu crois creer la variable command, que l'on va lancer dans system
-; ensuite tu dois appeler system et executer le fichier Sully_5.s et executer Sully_5
-; Ensuite je ne sais pas comment on va gerer la decrementation du X 
-; ni faire en sorte de commencer avec X - 1
-; Essaie de ne pas utiliser l'IA sinon ca sert a rien de le faire
+
 	lea		rdi, [command]
 	mov		rsi, 32
+	lea		rdx, 
+
+;	lea		rdi, [command]
+;	mov		rsi, 32
+;	lea		rdx, [command]
+;	call	system
+
+;int snprintf(name_command, sizeof(name_command), "nasm -f elf64 %s -o %s && gcc %s -o %s", filename, objectFile, objectFile, executable); // 65 characters
+
+	lea		rdi, [command2execute]
+	mov		rsi, 65
 	lea		rdx, [command]
-	call	system
+	lea		rcx, [filename]
+	lea		r8, [objectFile]
+	lea		r9, [objectFile]
+	lea		r10, [executable]
 
 	xor		rax, rax
 	pop		rbp
@@ -68,8 +76,21 @@ filename:	db	"Sully_%d.s", 0
 executable:	db	"Sully_%d", 0
 code:		db	"myCode", 0
 counter:	dq	5
-command:	db	"gcc %s -o %s && ./%s", 0
+command:	db	"nasm -f elf64 %s -o %s && gcc %s -o %s", 0
 
 section	.bss
 fd:			resb	32
 file_size:	resb	32
+command2execute:	resb	65
+
+; definit les arguments de system()
+; tu crois creer la variable command, que l'on va lancer dans system
+; ensuite tu dois appeler system et executer le fichier Sully_5.s et executer Sully_5
+; Ensuite je ne sais pas comment on va gerer la decrementation du X 
+; ni faire en sorte de commencer avec X - 1
+; Essaie de ne pas utiliser l'IA sinon ca sert a rien de le faire
+
+; J'y ai mis toutes les bibliotheques
+; J'ai definit une macro code qui contient tout le code a auto imprimer
+; J'ai ecris tout le code dans le main
+; La difficulte: faire decrementer le fichier_X et que son enfant contienne le code necessaire pour creer le fichier_{X - 1}, etc...

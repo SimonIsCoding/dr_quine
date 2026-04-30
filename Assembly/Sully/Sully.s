@@ -48,26 +48,28 @@ main:
 	dec		rax
 	mov		[counter], rax
 
-	lea		rdi, [command]
-	mov		rsi, 32
-	lea		rdx, 
+;	lea		rdi, [command]
+;	mov		rsi, 32
+;	lea		rdx, 
 
 ;	lea		rdi, [command]
 ;	mov		rsi, 32
 ;	lea		rdx, [command]
 ;	call	system
 
+; exemple dans Sully.c : 	snprintf(filename, sizeof(filename), "Sully_%d.c", i);
 ;int snprintf(file1, sizeof(file1), "Sully_5.s", filename);
 ;int snprintf(file2, sizeof(file2), "Sully_5.o", objectFile);
 ;int snprintf(command_nasm, sizeof(command_nasm), "nasm -f elf64 %s -o %s", filename, objectFile); // 65 characters
 ;int snprintf(command_gcc, sizeof(command_gcc), "gcc %s -o %s", objectFile, executable); // 65 characters
 
+;1er call de snprintf: on veut creer le buffer file1 qui contient: "Sully_5.s"
 	lea		rdi, [file1]
 	mov		rsi, 32
-	lea		rdx, []
-	lea		rcx, []
-	lea		r8, []
-	lea		r9, []
+	lea		rdx, [filename]
+	lea		rcx, rax
+;	lea		r8, []
+;	lea		r9, []
 	call	snprintf wrt ..plt
 
 	xor		rax, rax

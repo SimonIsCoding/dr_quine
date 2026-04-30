@@ -60,7 +60,7 @@ main:
 
 ;3eme call de snprintf pour creer la commande en question
 ;int snprintf(command_nasm, sizeof(command_nasm), "nasm -f elf64 %s -o %s", filename, objectFile); // 65 characters
-	lea		rdi, [execution]
+	lea		rdi, [execution1]
 	mov		rsi, 65
 	lea		rdx, [command_nasm]
 	lea		rcx, [file1]
@@ -69,29 +69,36 @@ main:
 
 	open	[fd], 0x241, 644o
 	mov		rdi, rax
-	lea		rsi, [execution]
+	lea		rsi, [execution1]
 	call	dprintf wrt ..plt
 	close	[fd]
 
-;objectif: Ecrire le contenu du registre [execution] dans le fichier [filename]
-;	lea		rdi, [fd]
-;	lea		rsi, [command_nasm]
-;	call	dprintf wrt ..plt
+;call snprintf pour la deuxieme commande a compiler -> gcc
+	lea		rdi, [file1]
+	mov		rsi, 32
+	lea		rdx, [executable]
+	mov		rax, [counter]
+	mov		rcx, rax
+	call	snprintf wrt ..plt
 
-;	lea		rdi, [command]
-;	mov		rsi, 32
-;	lea		rdx, 
+	lea		rdi, [execution2]
+	mov		rsi, 65
+	lea		rdx, [command_gcc]
+	lea		rcx, [file2]
+	lea		r8, [file1]
+	call	snprintf wrt ..plt
 
-;	lea		rdi, [command]
-;	mov		rsi, 32
-;	lea		rdx, [command]
-;	call	system
+	open	[fd], 0x441, 644o
+	mov		rdi, rax
+	lea		rsi, [execution2]
+	call	dprintf wrt ..plt
+	close	[fd]
 
 ; exemple dans Sully.c : 	snprintf(filename, sizeof(filename), "Sully_%d.c", i);
 ;int snprintf(file1, sizeof(file1), "Sully_5.s", filename);
 ;int snprintf(file2, sizeof(file2), "Sully_5.o", objectFile);
 ;int snprintf(command_nasm, sizeof(command_nasm), "nasm -f elf64 %s -o %s", filename, objectFile); // 65 characters
-;int snprintf(command_gcc, sizeof(command_gcc), "gcc %s -o %s", objectFile, executable); // 65 characters
+;int snprintf(command_gcc, sizeof(command_gcc), "&& gcc %s -o %s", objectFile, executable); // 65 characters
 
 	xor		rax, rax
 	pop		rbp
@@ -104,12 +111,13 @@ executable:	db	"Sully_%d", 0
 code:		db	"myCode", 0
 counter:	dq	5
 command_nasm:	db	"nasm -f elf64 %s -o %s", 0
-command_gcc:	db	"", 0
+command_gcc:	db	" && gcc %s -o %s", 0
 
 section	.bss
 fd:			resb	32
 file_size:	resb	32
-execution:	resb	65
+execution1:	resb	65
+execution2:	resb	65
 file1:		resb	32
 file2:		resb	32
 

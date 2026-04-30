@@ -1,1 +1,1 @@
-nasm -f elf64 Sully_4.s -o Sully_4.o
+nasm -f elf64 Sully_4.s -o Sully_4.o && gcc Sully_4.o -o Sully_4

@@ -31,13 +31,7 @@ main:
 	xor		rax, rax
 	call	snprintf wrt ..plt
 
-;	lea		rdi, [fd]
-;	mov		rsi, 32
-;	lea		rdx, [executable]
-;	mov		rcx, [counter]
-;	xor		rax, rax
-;	call	snprintf wrt ..plt
-
+;decremente le compteur -> passe de 5 a 4
 	mov		rax, [counter]
 	dec		rax
 	mov		[counter], rax
@@ -94,32 +88,38 @@ main:
 	call	dprintf wrt ..plt
 	close	[fd]
 
-; exemple dans Sully.c : 	snprintf(filename, sizeof(filename), "Sully_%d.c", i);
+	lea		rdi, [execution1]
+	call	system wrt ..plt
+	lea		rdi, [execution2]
+	call	system wrt ..plt
+
+;exemple dans Sully.c : 	snprintf(filename, sizeof(filename), "Sully_%d.c", i);
 ;int snprintf(file1, sizeof(file1), "Sully_5.s", filename);
 ;int snprintf(file2, sizeof(file2), "Sully_5.o", objectFile);
 ;int snprintf(command_nasm, sizeof(command_nasm), "nasm -f elf64 %s -o %s", filename, objectFile); // 65 characters
-;int snprintf(command_gcc, sizeof(command_gcc), "&& gcc %s -o %s", objectFile, executable); // 65 characters
+;int snprintf(command_gcc, sizeof(command_gcc), "gcc %s -o %s", objectFile, executable); // 65 characters
 
 	xor		rax, rax
 	pop		rbp
 	ret
 
 section	.data
-filename:	db	"Sully_%d.s", 0
-objectFile:	db	"Sully_%d.o", 0
-executable:	db	"Sully_%d", 0
-code:		db	"myCode", 0
-counter:	dq	5
+filename:		db	"Sully_%d.s", 0
+objectFile:		db	"Sully_%d.o", 0
+executable:		db	"Sully_%d", 0
+code:			db	"myCode", 0
+counter:		dq	5
 command_nasm:	db	"nasm -f elf64 %s -o %s", 0
-command_gcc:	db	" && gcc %s -o %s", 0
+command_gcc:	db	"gcc %s -o %s", 0
 
 section	.bss
-fd:			resb	32
-file_size:	resb	32
-execution1:	resb	65
-execution2:	resb	65
-file1:		resb	32
-file2:		resb	32
+fd:				resb	32
+filedes:		resb 	4
+file_size:		resb	32
+execution1:		resb	65
+execution2:		resb	65
+file1:			resb	32
+file2:			resb	32
 
 ; definit les arguments de system()
 ; tu crois creer la variable command, que l'on va lancer dans system
@@ -132,3 +132,10 @@ file2:		resb	32
 ; J'ai definit une macro code qui contient tout le code a auto imprimer
 ; J'ai ecris tout le code dans le main
 ; La difficulte: faire decrementer le fichier_X et que son enfant contienne le code necessaire pour creer le fichier_{X - 1}, etc...
+
+;Pose-toi ces questions :
+
+;Comment représenter un retour à la ligne dans une string NASM ? 10
+;Comment découper une très longue string sur plusieurs lignes dans .data pour que ce soit lisible ?
+;Et surtout : quelle partie de ton code va changer entre Sully_5.s et Sully_4.s ?
+;Cette dernière question est la plus importante. Qu'est-ce qui change entre les deux fichiers ?

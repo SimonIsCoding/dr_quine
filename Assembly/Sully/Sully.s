@@ -38,15 +38,45 @@ main:
 ;	xor		rax, rax
 ;	call	snprintf wrt ..plt
 
-	open	[fd], 0x241, 644o
-	mov		rdi, rax
-	lea		rsi, [code]
-	call	dprintf wrt ..plt
-	close	[fd]
-
 	mov		rax, [counter]
 	dec		rax
 	mov		[counter], rax
+
+;1er call de snprintf: on veut creer le buffer file1 qui contient: "Sully_5.s"
+	lea		rdi, [file1]
+	mov		rsi, 32
+	lea		rdx, [filename]
+	mov		rax, [counter]
+	mov		rcx, rax
+	call	snprintf wrt ..plt
+
+;2eme call de snprintf: on veut creer le buffer objectFile qui contient: "Sully_5.o"
+	lea		rdi, [file2]
+	mov		rsi, 32
+	lea		rdx, [objectFile]
+	mov		rax, [counter]
+	mov		rcx, rax
+	call	snprintf wrt ..plt
+
+;3eme call de snprintf pour creer la commande en question
+;int snprintf(command_nasm, sizeof(command_nasm), "nasm -f elf64 %s -o %s", filename, objectFile); // 65 characters
+	lea		rdi, [execution]
+	mov		rsi, 65
+	lea		rdx, [command_nasm]
+	lea		rcx, [file1]
+	lea		r8, [file2]
+	call	snprintf wrt ..plt
+
+	open	[fd], 0x241, 644o
+	mov		rdi, rax
+	lea		rsi, [execution]
+	call	dprintf wrt ..plt
+	close	[fd]
+
+;objectif: Ecrire le contenu du registre [execution] dans le fichier [filename]
+;	lea		rdi, [fd]
+;	lea		rsi, [command_nasm]
+;	call	dprintf wrt ..plt
 
 ;	lea		rdi, [command]
 ;	mov		rsi, 32
@@ -63,15 +93,6 @@ main:
 ;int snprintf(command_nasm, sizeof(command_nasm), "nasm -f elf64 %s -o %s", filename, objectFile); // 65 characters
 ;int snprintf(command_gcc, sizeof(command_gcc), "gcc %s -o %s", objectFile, executable); // 65 characters
 
-;1er call de snprintf: on veut creer le buffer file1 qui contient: "Sully_5.s"
-	lea		rdi, [file1]
-	mov		rsi, 32
-	lea		rdx, [filename]
-	lea		rcx, rax
-;	lea		r8, []
-;	lea		r9, []
-	call	snprintf wrt ..plt
-
 	xor		rax, rax
 	pop		rbp
 	ret
@@ -82,7 +103,7 @@ objectFile:	db	"Sully_%d.o", 0
 executable:	db	"Sully_%d", 0
 code:		db	"myCode", 0
 counter:	dq	5
-command_nasm:	db	"", 0
+command_nasm:	db	"nasm -f elf64 %s -o %s", 0
 command_gcc:	db	"", 0
 
 section	.bss

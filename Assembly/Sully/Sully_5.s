@@ -1,1 +1,1 @@
-myCode
+nasm -f elf64 Sully_4.s -o Sully_4.o

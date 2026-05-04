@@ -1,1 +1,0 @@
-nasm -f elf64 Sully_4.s -o Sully_4.ogcc Sully_4.o -o Sully_4

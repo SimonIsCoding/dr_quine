@@ -39,7 +39,7 @@ main:
 	lea		rsi, [code]
 	lea		rdx, 10
 	mov		rcx, 34
-	mov		r8, [counter]
+	mov		r8, []
 	mov		r9, [code]
 	xor		rax, rax
 	call	dprintf wrt ..plt
@@ -54,5 +54,5 @@ fileName:	resb	32
 fd:			resb	32
 
 section	.data
-counter:	dq	5
+counter:	dq	
 name:		db	"Sully_%d.s", 0

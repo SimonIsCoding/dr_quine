@@ -23,14 +23,6 @@ extern	printf
 	syscall
 %endmacro
 
-%macro write 3
-	mov	rax, 1
-	mov	rdi, %1
-	lea	rsi, %2
-	mov	rdx, %3
-	syscall
-%endmacro
-
 %macro close 1
 	mov	rax, 3
 	mov	rdi, %1
@@ -55,6 +47,10 @@ main:
 	call	printf wrt ..plt
 	
 	open	[fileName], 0x441, 644o
+
+;write the entire code here inside of fileName
+
+	close	[fileName]
 
 	pop		rbp
 	ret

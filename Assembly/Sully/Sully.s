@@ -1,17 +1,3 @@
-;Ce qui devrait rester
-;En réalité, la structure de Sully devrait ressembler beaucoup à Grace, avec seulement deux différences :
-; - Le nom du fichier est dynamique (avec %d)
-; - La compilation et l'exécution du fichier enfant s'ajoutent à la fin
-
-; 1. Construire le nom du fichier enfant (Sully_4.s)
-; 2. Ouvrir ce fichier
-; 3. Ecrire TOUT le code source dedans (comme Grace)
-; 4. Fermer le fichier
-; 5. system("nasm ...")
-; 6. system("gcc ...")
-; 7. system("./Sully_4")  ← mais seulement sous quelle condition ?
-; extern	printf
-
 extern	dprintf
 extern	snprintf
 extern	system
@@ -76,7 +62,6 @@ main:
 	xor		rax, rax
 	call	dprintf wrt ..plt
 
-;int snprintf(execution1, 64, "nasm -f elf64 %s -o %s", fileName, objectName);
 	mov		rdi, execution1
 	mov		rsi, 64
 	lea		rdx, [nasm]

@@ -19,7 +19,7 @@ clean:
 		$(RM) $(OBJS)
 
 fclean: clean
-		$(RM) $(NAME)
+		$(RM) $(NAME) tmp_Colleen
 
 re:		fclean all
 

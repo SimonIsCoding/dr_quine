@@ -30,7 +30,9 @@ Grace:	./Grace/Grace
 Sully:	./Sully/build/Sully
 
 fclean:
-	$(RM) ./Colleen/Colleen ./Colleen/tmp_Colleen ./Grace/Grace ./Grace/Grace_kid.c ./Sully/build
+	$(RM) ./Colleen/Colleen ./Colleen/tmp_Colleen
+	$(RM) ./Grace/Grace ./Grace/Grace_kid.c
+	$(RM) ./Sully/build
 
 re:	fclean all
 
